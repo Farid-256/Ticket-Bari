@@ -2,24 +2,44 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { signOut, useSession } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth-client"; // ← authClient ইম্পোর্ট করো
+import { toast } from "react-toastify";
+
 
 const Navbar = () => {
     const pathName = usePathname();
+    const router = useRouter();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
+    const { data: session, isPending } = useSession();
 
+    const user = session?.user;
 
-    const user = null; 
-
-    const handleLogout = () => {
-  
-        console.log("Logout clicked");
-        setShowDropdown(false);
-        setMobileMenuOpen(false);
+    // লগআউট ফাংশন
+    const handleLogout = async () => {
+       await signOut()
     };
+
+    // লোডিং স্টেট
+    if (isPending) {
+        return (
+            <nav className="bg-amber-50 border-b sticky top-0 z-50 shadow-sm">
+                <div className="max-w-7xl mx-auto px-5 py-5 flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                        <Image className="rounded-full" src="/assets/navlogo.png" height={100} width={100} alt="logo" />
+                        <h3 className="text-3xl font-bold text-blue-800">
+                            Ticket <span className="text-amber-600">Bari</span>
+                        </h3>
+                    </div>
+                    <div className="w-8 h-8 border-4 border-blue-800 border-t-transparent rounded-full animate-spin"></div>
+                </div>
+            </nav>
+        );
+    }
 
     return (
         <nav className="bg-amber-50 border-b sticky top-0 z-50 shadow-sm">
@@ -28,8 +48,7 @@ const Navbar = () => {
 
                     {/* Logo */}
                     <div className="flex items-center gap-2">
-                        <Image className="rounded-full" src="/assets/navlogo.png" height={100} width={100} alt="logo"
-                        />
+                        <Image className="rounded-full" src="/assets/navlogo.png" height={100} width={100} alt="logo" />
                         <h3 className="text-3xl font-bold text-blue-800">
                             Ticket <span className="text-amber-600">Bari</span>
                         </h3>
@@ -43,31 +62,27 @@ const Navbar = () => {
                         >
                             Home
                         </Link>
-
                         <Link
                             href="/all-tickets"
                             className={`text-lg ${pathName === '/all-tickets' ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
                         >
                             All Tickets
                         </Link>
-
                         <Link
                             href="/dashboard"
                             className={`text-lg ${pathName.startsWith('/dashboard') ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
                         >
                             Dashboard
                         </Link>
-
                         <Link
-                            href="/"
-                            className={`text-lg ${pathName.startsWith('/about') ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
+                            href="/about"
+                            className={`text-lg ${pathName === '/about' ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
                         >
                             About
                         </Link>
-
                         <Link
-                            href="/"
-                            className={`text-lg ${pathName.startsWith('/help&support') ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
+                            href="/help"
+                            className={`text-lg ${pathName === '/help' ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
                         >
                             Help & Support
                         </Link>
@@ -76,7 +91,7 @@ const Navbar = () => {
                     {/* Right Side: Login/User */}
                     <div className="flex items-center gap-4">
                         {user ? (
-                            
+                            // লগইন থাকলে অ্যাভাটার + ড্রপডাউন
                             <div className="relative">
                                 <div
                                     className="cursor-pointer flex items-center gap-2"
@@ -110,14 +125,14 @@ const Navbar = () => {
                                 )}
                             </div>
                         ) : (
-                           
+                            // লগইন না থাকলে লগইন ও রেজিস্টার বাটন
                             <div className="hidden md:flex gap-3">
-                                <Link href="/login">
+                                <Link href="/auth/login">
                                     <button className="bg-blue-800 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded-sm transition cursor-pointer">
                                         Login
                                     </button>
                                 </Link>
-                                <Link href="/register">
+                                <Link href="/auth/register">
                                     <button className="bg-blue-800 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded-sm transition cursor-pointer">
                                         Get Started
                                     </button>
@@ -139,37 +154,49 @@ const Navbar = () => {
                 {mobileMenuOpen && (
                     <div className="md:hidden mt-6 py-6 border-t border-gray-200">
                         <div className="flex flex-col gap-6 text-lg">
-                            <Link
-                                href="/"
-                                onClick={() => setMobileMenuOpen(false)}
-                                className="hover:text-blue-800 transition"
-                            >
+                            <Link href="/" onClick={() => setMobileMenuOpen(false)} className="hover:text-blue-800 transition">
                                 Home
                             </Link>
-                            <Link
-                                href="/all-tickets"
-                                onClick={() => setMobileMenuOpen(false)}
-                                className="hover:text-blue-800 transition"
-                            >
+                            <Link href="/all-tickets" onClick={() => setMobileMenuOpen(false)} className="hover:text-blue-800 transition">
                                 All Tickets
                             </Link>
-                            <Link
-                                href="/dashboard"
-                                onClick={() => setMobileMenuOpen(false)}
-                                className="hover:text-blue-800 transition"
-                            >
+                            <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)} className="hover:text-blue-800 transition">
                                 Dashboard
                             </Link>
+                            <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="hover:text-blue-800 transition">
+                                About
+                            </Link>
+                            <Link href="/help" onClick={() => setMobileMenuOpen(false)} className="hover:text-blue-800 transition">
+                                Help & Support
+                            </Link>
 
-                            
-                            {!user && (
+                            {/* মোবাইলে ইউজার ইনফো বা লগইন/রেজিস্টার */}
+                            {user ? (
+                                <>
+                                    <div className="pt-4 border-t flex items-center gap-3">
+                                        <div className="w-10 h-10 rounded-full bg-blue-800 text-white flex items-center justify-center font-bold">
+                                            {user.name?.[0] || 'U'}
+                                        </div>
+                                        <div>
+                                            <p className="font-semibold">{user.name}</p>
+                                            <p className="text-sm text-gray-500">{user.email}</p>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-sm transition"
+                                    >
+                                        Logout
+                                    </button>
+                                </>
+                            ) : (
                                 <div className="flex flex-col gap-3 pt-4 border-t">
-                                    <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
+                                    <Link href="/auth/login" onClick={() => setMobileMenuOpen(false)}>
                                         <button className="w-full bg-blue-800 text-white py-2 rounded-sm">
                                             Login
                                         </button>
                                     </Link>
-                                    <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
+                                    <Link href="/auth/register" onClick={() => setMobileMenuOpen(false)}>
                                         <button className="w-full bg-blue-800 text-white py-2 rounded-sm">
                                             Get Started
                                         </button>
