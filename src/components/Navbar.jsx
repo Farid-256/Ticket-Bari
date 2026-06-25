@@ -23,12 +23,12 @@ const Navbar = () => {
 
     return (
         <nav className="bg-amber-50 border-b sticky top-0 z-50 shadow-sm">
-            <div className="max-w-7xl mx-auto px-6 py-5">
+            <div className="max-w-7xl mx-auto px-5 py-5">
                 <div className="flex justify-between items-center">
 
                     {/* Logo */}
                     <div className="flex items-center gap-2">
-                        <Image className="rounded-full" src="/assets/navlogo.png" height={120} width={120} alt="logo"
+                        <Image className="rounded-full" src="/assets/navlogo.png" height={100} width={100} alt="logo"
                         />
                         <h3 className="text-3xl font-bold text-blue-800">
                             Ticket <span className="text-amber-600">Bari</span>
@@ -36,31 +36,47 @@ const Navbar = () => {
                     </div>
 
                     {/* Desktop Menu */}
-                    <div className="hidden md:flex items-center gap-10">
+                    <div className="hidden md:flex items-center gap-5">
                         <Link
                             href="/"
-                            className={`text-xl ${pathName === '/' ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
+                            className={`text-lg ${pathName === '/' ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
                         >
                             Home
                         </Link>
+
                         <Link
                             href="/all-tickets"
-                            className={`text-xl ${pathName === '/all-tickets' ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
+                            className={`text-lg ${pathName === '/all-tickets' ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
                         >
                             All Tickets
                         </Link>
+
                         <Link
                             href="/dashboard"
-                            className={`text-xl ${pathName.startsWith('/dashboard') ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
+                            className={`text-lg ${pathName.startsWith('/dashboard') ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
                         >
                             Dashboard
+                        </Link>
+
+                        <Link
+                            href="/"
+                            className={`text-lg ${pathName.startsWith('/about') ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
+                        >
+                            About
+                        </Link>
+
+                        <Link
+                            href="/"
+                            className={`text-lg ${pathName.startsWith('/help&support') ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
+                        >
+                            Help & Support
                         </Link>
                     </div>
 
                     {/* Right Side: Login/User */}
                     <div className="flex items-center gap-4">
                         {user ? (
-                            // লগইন থাকলে ইউজার অ্যাভাটার
+                            
                             <div className="relative">
                                 <div
                                     className="cursor-pointer flex items-center gap-2"
@@ -94,7 +110,7 @@ const Navbar = () => {
                                 )}
                             </div>
                         ) : (
-                            // লগইন না থাকলে লগইন ও রেজিস্টার বাটন
+                           
                             <div className="hidden md:flex gap-3">
                                 <Link href="/login">
                                     <button className="bg-blue-800 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded-sm transition cursor-pointer">
@@ -145,7 +161,7 @@ const Navbar = () => {
                                 Dashboard
                             </Link>
 
-                            {/* মোবাইলে লগইন/রেজিস্টার বাটন (যদি ইউজার না থাকে) */}
+                            
                             {!user && (
                                 <div className="flex flex-col gap-3 pt-4 border-t">
                                     <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
