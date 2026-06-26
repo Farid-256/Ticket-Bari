@@ -6,8 +6,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { signOut, useSession } from "@/lib/auth-client";
-import { authClient } from "@/lib/auth-client"; // ← authClient ইম্পোর্ট করো
-import { toast } from "react-toastify";
 
 
 const Navbar = () => {
@@ -19,12 +17,12 @@ const Navbar = () => {
 
     const user = session?.user;
 
-    // লগআউট ফাংশন
+
     const handleLogout = async () => {
        await signOut()
     };
 
-    // লোডিং স্টেট
+  
     if (isPending) {
         return (
             <nav className="bg-amber-50 border-b sticky top-0 z-50 shadow-sm">
@@ -91,14 +89,14 @@ const Navbar = () => {
                     {/* Right Side: Login/User */}
                     <div className="flex items-center gap-4">
                         {user ? (
-                            // লগইন থাকলে অ্যাভাটার + ড্রপডাউন
+                      
                             <div className="relative">
                                 <div
                                     className="cursor-pointer flex items-center gap-2"
                                     onClick={() => setShowDropdown(!showDropdown)}
                                 >
-                                    <div className="w-10 h-10 rounded-full bg-blue-800 text-white flex items-center justify-center font-bold text-lg">
-                                        {user.name?.[0] || 'U'}
+                                    <div className="w-10 h-10 text-green-500 flex items-center justify-center font-bold text-lg">
+                                        {user?.name || 'U'}
                                     </div>
                                 </div>
 
@@ -125,15 +123,16 @@ const Navbar = () => {
                                 )}
                             </div>
                         ) : (
-                            // লগইন না থাকলে লগইন ও রেজিস্টার বাটন
                             <div className="hidden md:flex gap-3">
                                 <Link href="/auth/login">
-                                    <button className="bg-blue-800 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded-sm transition cursor-pointer">
+                                    <button className="bg-blue-800 hover:bg-blue-700 
+                                    text-white font-bold px-6 py-2 rounded-sm transition cursor-pointer">
                                         Login
                                     </button>
                                 </Link>
                                 <Link href="/auth/register">
-                                    <button className="bg-blue-800 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded-sm transition cursor-pointer">
+                                    <button className="bg-blue-800 hover:bg-blue-700 
+                                    text-white font-bold px-6 py-2 rounded-sm transition cursor-pointer">
                                         Get Started
                                     </button>
                                 </Link>
@@ -170,13 +169,10 @@ const Navbar = () => {
                                 Help & Support
                             </Link>
 
-                            {/* মোবাইলে ইউজার ইনফো বা লগইন/রেজিস্টার */}
+                     
                             {user ? (
                                 <>
                                     <div className="pt-4 border-t flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-full bg-blue-800 text-white flex items-center justify-center font-bold">
-                                            {user.name?.[0] || 'U'}
-                                        </div>
                                         <div>
                                             <p className="font-semibold">{user.name}</p>
                                             <p className="text-sm text-gray-500">{user.email}</p>
