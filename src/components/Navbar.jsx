@@ -5,8 +5,9 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import { signOut, useSession } from "@/lib/auth-client";
-
+import { useSession } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
     const pathName = usePathname();
@@ -17,12 +18,20 @@ const Navbar = () => {
 
     const user = session?.user;
 
-
+    // Logout handler
     const handleLogout = async () => {
-       await signOut()
+        try {
+            await authClient.signOut();
+            toast.success("Logged out successfully!");
+            router.push("/");
+            setShowDropdown(false);
+            setMobileMenuOpen(false);
+        } catch (error) {
+            toast.error("Logout failed. Please try again.");
+        }
     };
 
-  
+    // Loading state
     if (isPending) {
         return (
             <nav className="bg-amber-50 border-b sticky top-0 z-50 shadow-sm">
@@ -67,7 +76,7 @@ const Navbar = () => {
                             All Tickets
                         </Link>
                         <Link
-                            href="/dashboard"
+                            href="/dashboard/vendor"
                             className={`text-lg ${pathName.startsWith('/dashboard') ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
                         >
                             Dashboard
@@ -89,15 +98,32 @@ const Navbar = () => {
                     {/* Right Side: Login/User */}
                     <div className="flex items-center gap-4">
                         {user ? (
-                      
+                            // Logged in: Show avatar + dropdown
                             <div className="relative">
                                 <div
                                     className="cursor-pointer flex items-center gap-2"
                                     onClick={() => setShowDropdown(!showDropdown)}
                                 >
-                                    <div className="w-10 h-10 text-green-500 flex items-center justify-center font-bold text-lg">
-                                        {user?.name || 'U'}
+                                    {/* Avatar with image */}
+                                    <div className="w-10 h-10 rounded-full overflow-hidden bg-blue-100 flex items-center justify-center border-2 border-blue-800">
+                                        {user.image ? (
+                                            <Image
+                                                src={user.image}
+                                                alt={user.name || 'User'}
+                                                width={40}
+                                                height={40}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        ) : (
+                                            <span className="text-lg font-bold text-blue-800">
+                                                {user.name?.[0] || 'U'}
+                                            </span>
+                                        )}
                                     </div>
+                                    {/* User name */}
+                                    <span className="hidden md:block text-blue-800 font-semibold">
+                                        {user.name}
+                                    </span>
                                 </div>
 
                                 {showDropdown && (
@@ -107,7 +133,7 @@ const Navbar = () => {
                                             <p className="text-xs">{user.email}</p>
                                         </div>
                                         <Link
-                                            href="/dashboard/profile"
+                                            href="/dashboard/vendor"
                                             className="block px-6 py-3 hover:bg-gray-100 transition"
                                             onClick={() => setShowDropdown(false)}
                                         >
@@ -123,16 +149,15 @@ const Navbar = () => {
                                 )}
                             </div>
                         ) : (
+                            // Not logged in: Show Login & Register buttons
                             <div className="hidden md:flex gap-3">
                                 <Link href="/auth/login">
-                                    <button className="bg-blue-800 hover:bg-blue-700 
-                                    text-white font-bold px-6 py-2 rounded-sm transition cursor-pointer">
+                                    <button className="bg-blue-800 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded-sm transition cursor-pointer">
                                         Login
                                     </button>
                                 </Link>
                                 <Link href="/auth/register">
-                                    <button className="bg-blue-800 hover:bg-blue-700 
-                                    text-white font-bold px-6 py-2 rounded-sm transition cursor-pointer">
+                                    <button className="bg-blue-800 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded-sm transition cursor-pointer">
                                         Get Started
                                     </button>
                                 </Link>
@@ -159,7 +184,7 @@ const Navbar = () => {
                             <Link href="/all-tickets" onClick={() => setMobileMenuOpen(false)} className="hover:text-blue-800 transition">
                                 All Tickets
                             </Link>
-                            <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)} className="hover:text-blue-800 transition">
+                            <Link href="/dashboard/vendor" onClick={() => setMobileMenuOpen(false)} className="hover:text-blue-800 transition">
                                 Dashboard
                             </Link>
                             <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="hover:text-blue-800 transition">
@@ -169,10 +194,26 @@ const Navbar = () => {
                                 Help & Support
                             </Link>
 
-                     
+                            {/* Mobile: User info or Login/Register */}
                             {user ? (
                                 <>
                                     <div className="pt-4 border-t flex items-center gap-3">
+                                        {/* Avatar kecil di mobile */}
+                                        <div className="w-10 h-10 rounded-full overflow-hidden bg-blue-100 flex items-center justify-center">
+                                            {user.image ? (
+                                                <Image
+                                                    src={user.image}
+                                                    alt={user.name || 'User'}
+                                                    width={40}
+                                                    height={40}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            ) : (
+                                                <span className="text-lg font-bold text-blue-800">
+                                                    {user.name?.[0] || 'U'}
+                                                </span>
+                                            )}
+                                        </div>
                                         <div>
                                             <p className="font-semibold">{user.name}</p>
                                             <p className="text-sm text-gray-500">{user.email}</p>

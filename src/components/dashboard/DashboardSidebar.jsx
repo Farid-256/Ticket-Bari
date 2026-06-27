@@ -1,23 +1,27 @@
 
 
-import { Bars, Bell, Envelope, Gear, House, Magnifier, Person } from "@gravity-ui/icons";
+import { Bars, House,} from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
+import {CirclePlus} from '@gravity-ui/icons';
+import {Ticket} from '@gravity-ui/icons';
+import {BookmarkFill} from '@gravity-ui/icons';
+import {FileDollar} from '@gravity-ui/icons';
 
 export function DashboardSidebar() {
     const navItems = [
-        { icon: House, label: "Home" },
-        { icon: Magnifier, label: "Search" },
-        { icon: Bell, label: "Notifications" },
-        { icon: Envelope, label: "Messages" },
-        { icon: Person, label: "Profile" },
-        { icon: Gear, label: "Settings" },
+        { icon: House, href:'/dashboard/vendor', label: "Profile" },
+        { icon: CirclePlus, label: "Add Ticket" },
+        { icon: Ticket, label: "My Added Ticket" },
+        { icon: BookmarkFill, label: "Requested Bookings" },
+        { icon: FileDollar, label: "Revenue" },
     ]
 
     const navContent = <nav className="flex flex-col gap-1">
         {navItems.map((item) => (
             <button
                 key={item.label}
-                className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-default"
+                className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm
+                text-foreground transition-colors hover:bg-default"
                 type="button">
                 <item.icon className="size-5 text-muted" />
                 {item.label}

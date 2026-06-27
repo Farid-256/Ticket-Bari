@@ -18,12 +18,12 @@ const Register = () => {
             return;
         }
 
-      
         const { data, error } = await authClient.signUp.email({
             name: newUser.name,
             email: newUser.email,
             password: newUser.password,
-            role: newUser.role || 'user', 
+            image: newUser.image || null,
+            role: newUser.role || 'user',
         });
 
         if (data) {
@@ -39,7 +39,7 @@ const Register = () => {
             <div className="w-full max-w-4xl bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
                 <div className="grid md:grid-cols-2">
 
-       
+                    {/* Left Side Illustration */}
                     <div className="hidden md:flex items-center justify-center bg-amber-50 p-8">
                         <div className="relative w-full max-w-xs aspect-square">
                             <Image
@@ -52,7 +52,7 @@ const Register = () => {
                         </div>
                     </div>
 
-                  
+                    {/* Right Side Form */}
                     <div className="p-8 md:p-10">
                         <div className="text-center mb-6">
                             <h3 className="text-2xl font-bold text-gray-800">Create Account</h3>
@@ -60,65 +60,50 @@ const Register = () => {
                         </div>
 
                         <Form onSubmit={onSubmit} className="space-y-4">
-                        
+
                             <TextField isRequired name="name">
                                 <Label className="text-gray-700">Full Name</Label>
                                 <Input placeholder="Enter your name" className="w-full" />
                                 <FieldError />
                             </TextField>
 
-                        
-                            <TextField
-                                isRequired
-                                name="email"
-                                type="email"
-                                validate={(value) => {
-                                    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-                                        return "Please enter a valid email address";
-                                    }
-                                    return null;
-                                }}
-                            >
+                            <TextField isRequired name="email" type="email">
                                 <Label className="text-gray-700">Email</Label>
                                 <Input placeholder="john@example.com" className="w-full" />
                                 <FieldError />
                             </TextField>
 
-                     
+                            {/* New Image URL Field */}
+                            <TextField name="image">
+                                <Label className="text-gray-700">Profile Picture URL (Optional)</Label>
+                                <Input
+                                    type="url"
+                                    placeholder="https://example.com/your-photo.jpg"
+                                    className="w-full"
+                                />
+                                <FieldError />
+                                <p className="text-xs text-gray-500 mt-1">Paste image link (imgbb or any direct link)</p>
+                            </TextField>
+
                             <TextField name="role" defaultValue="user">
                                 <Label className="text-gray-700">Role</Label>
-                                <select
-                                    name="role"
-                                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                >
+                                <select name="role" className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                     <option value="user">User</option>
                                     <option value="vendor">Vendor</option>
                                 </select>
                                 <p className="text-xs text-gray-400 mt-1">Select your role</p>
-                                <FieldError />
                             </TextField>
 
-                        
-                            <TextField
-                                isRequired
-                                minLength={6}
-                                name="password"
-                                type="password"
-                                validate={(value) => {
-                                    if (value.length < 6) return "Password must be at least 6 characters";
-                                    return null;
-                                }}
-                            >
+                            <TextField isRequired minLength={6} name="password" type="password">
                                 <Label className="text-gray-700">Password</Label>
-                                <Input placeholder="••••••••" className="w-full" />
+                                <Input placeholder="Password" className="w-full" />
                                 <p className="text-xs text-gray-400 mt-1">Minimum 6 characters</p>
                                 <FieldError />
                             </TextField>
 
-                        
                             <TextField isRequired name="confirmPassword" type="password">
                                 <Label className="text-gray-700">Confirm Password</Label>
-                                <Input placeholder="••••••••" className="w-full" />
+                                <Input placeholder="Password" className="w-full" />
                                 <FieldError />
                             </TextField>
 
@@ -127,21 +112,20 @@ const Register = () => {
                             </Button>
 
                             <p className="text-center text-sm text-gray-600 mt-2">
-                                Already have an account?
-                                <Link href="/auth/login" className="text-blue-600 hover:underline ml-1 font-medium">
+                                Already have an account?{' '}
+                                <Link href="/auth/login" className="text-blue-600 hover:underline font-medium">
                                     Login here
                                 </Link>
                             </p>
                         </Form>
 
-                
-                        <div className="flex items-center gap-4 my-4">
+                        {/* Google Sign In */}
+                        <div className="flex items-center gap-4 my-6">
                             <hr className="flex-1 border-gray-200" />
                             <span className="text-xs text-gray-400">OR</span>
                             <hr className="flex-1 border-gray-200" />
                         </div>
 
-                 
                         <button
                             onClick={async () => {
                                 await authClient.signIn.social({
