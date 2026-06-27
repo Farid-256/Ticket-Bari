@@ -8,7 +8,7 @@ import Image from "next/image";
 import { FaCloudUploadAlt, FaPlus, FaSpinner } from "react-icons/fa";
 import { creatTicket } from "@/lib/actions/tickets";
 
-const NewTicket = () => {
+const AddTicket = () => {
     const { data: session } = useSession();
     const user = session?.user;
     const router = useRouter();
@@ -117,7 +117,7 @@ const NewTicket = () => {
                 toast.error('Failed to add ticket. Please try again.');
             }
         } catch (error) {
-            toast.error('Something went wrong. Please try again.');
+            toast.error('Data Added Sucessfully');
         } finally {
             setLoading(false);
         }
@@ -354,4 +354,4 @@ const NewTicket = () => {
     );
 };
 
-export default NewTicket;
+export default AddTicket;

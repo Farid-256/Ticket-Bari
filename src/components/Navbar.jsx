@@ -70,24 +70,28 @@ const Navbar = () => {
                         >
                             Home
                         </Link>
+
                         <Link
                             href="/all-tickets"
                             className={`text-lg ${pathName === '/all-tickets' ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
                         >
                             All Tickets
                         </Link>
+
                         <Link
                             href="/dashboard/vendor"
                             className={`text-lg ${pathName.startsWith('/dashboard') ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
                         >
                             Dashboard
                         </Link>
+
                         <Link
                             href="/about"
                             className={`text-lg ${pathName === '/about' ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
                         >
                             About
                         </Link>
+                        
                         <Link
                             href="/help"
                             className={`text-lg ${pathName === '/help' ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}

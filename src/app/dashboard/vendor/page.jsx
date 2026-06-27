@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaUserEdit, FaEnvelope, FaUserTag,} from "react-icons/fa";
 
-const VendorDashboardHomePage = () => {
+const VendorProfilePage = () => {
     const { data: session, isPending } = useSession();
 
     if (isPending) {
@@ -131,4 +131,4 @@ const VendorDashboardHomePage = () => {
     );
 };
 
-export default VendorDashboardHomePage;
+export default VendorProfilePage;
