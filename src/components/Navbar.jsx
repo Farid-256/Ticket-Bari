@@ -14,7 +14,7 @@ const Navbar = () => {
     const router = useRouter();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
-    const { data: session, isPending } = useSession();
+    const { data: session, isPending, refetch } = useSession();
 
     const user = session?.user;
 
@@ -23,6 +23,7 @@ const Navbar = () => {
         try {
             await authClient.signOut();
             toast.success("Logged out successfully!");
+            await refetch();
             router.push("/");
             setShowDropdown(false);
             setMobileMenuOpen(false);
