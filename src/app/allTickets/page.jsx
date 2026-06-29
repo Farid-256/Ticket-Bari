@@ -2,7 +2,7 @@ import TicketListingContainer from "@/components/Tickets/TicketListingContainer"
 import { getTickets } from "@/lib/api/ticket";
 
 export default async function AllTicketsPage() {
-    // শুধু approved টিকেট আনবে (ব্যাকএন্ড থেকে)
+
     const tickets = await getTickets();
 
     return (
@@ -12,7 +12,6 @@ export default async function AllTicketsPage() {
                 <p className="text-gray-500 mt-2">Discover your next journey.</p>
             </div>
 
-            {/* ক্লায়েন্ট কম্পোনেন্টে ডাটা পাঠাও */}
             <TicketListingContainer initialTickets={tickets || []} />
         </div>
     );

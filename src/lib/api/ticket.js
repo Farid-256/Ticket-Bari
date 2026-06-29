@@ -6,6 +6,12 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 export const getTickets = async()=>{
     return serverFetch('/api/tickets')
 }
+
+export const getTicketById = async(ticketId) =>{
+    return serverFetch(`/api/allTickets/${ticketId}`)
+}
+
+
 export const getVendorTickets = async (vendorId) => {
     if (!vendorId) {
         throw new Error('vendorId is required');
