@@ -72,8 +72,8 @@ const Navbar = () => {
                         </Link>
 
                         <Link
-                            href="/all-tickets"
-                            className={`text-lg ${pathName === '/all-tickets' ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
+                            href="/allTickets"
+                            className={`text-lg ${pathName === '/allTickets' ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
                         >
                             All Tickets
                         </Link>

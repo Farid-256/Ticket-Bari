@@ -2,7 +2,7 @@
 
 import { useSession } from "@/lib/auth-client";
 import { useState, useRef } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { toast } from "react-toastify";
 import Image from "next/image";
 import { FaCloudUploadAlt, FaPlus, FaSpinner } from "react-icons/fa";
@@ -11,7 +11,7 @@ import { creatTicket } from "@/lib/actions/tickets";
 const AddTicket = () => {
     const { data: session } = useSession();
     const user = session?.user;
-    const router = useRouter();
+    console.log(user)
     const [loading, setLoading] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [imagePreview, setImagePreview] = useState(null);
@@ -73,7 +73,6 @@ const AddTicket = () => {
         }
     };
 
-    // Submit form
     // Submit form
     const handleSubmit = async (e) => {
         e.preventDefault();

@@ -26,7 +26,7 @@ const MyAddedTicket = async () => {
                 <h1 className="text-2xl font-bold text-gray-800 mb-6">My Added Tickets</h1>
                 <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
                     <p className="text-gray-500 text-lg">You havent added any tickets yet.</p>
-                    <Link href="/dashboard/vendor/ticket" className="inline-block mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg transition">
+                    <Link href="/dashboard/vendor/addTicket" className="inline-block mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg transition">
                         Add Your First Ticket
                     </Link>
                 </div>
