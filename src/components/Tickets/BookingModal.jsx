@@ -12,7 +12,7 @@ const BookingModal = ({ ticket, isExpired, isSoldOut }) => {
     const [quantity, setQuantity] = useState(1);
     const [loading, setLoading] = useState(false);
 
-    // ইউজার লগইন না থাকলে বুকিং ডিজেবল
+
     const isDisabled = isExpired || isSoldOut || !user;
 
     const handleSubmit = async (e) => {
@@ -119,7 +119,8 @@ const BookingModal = ({ ticket, isExpired, isSoldOut }) => {
                                         parseInt(e.target.value) || 1,
                                         ticket.ticketQuantity
                                     ))}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 
+                                    focus:border-blue-500 outline-none"
                                 />
                                 <p className="text-xs text-gray-400 mt-1">Max: {ticket.ticketQuantity}</p>
                             </div>
@@ -127,7 +128,8 @@ const BookingModal = ({ ticket, isExpired, isSoldOut }) => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition disabled:opacity-50"
+                                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition 
+                                disabled:opacity-50"
                             >
                                 {loading ? 'Booking...' : `Confirm Booking (৳${ticket.price * quantity})`}
                             </button>

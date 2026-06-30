@@ -31,15 +31,16 @@ const TicketDetails = async ({ params }) => {
                 ← Back to All Tickets
             </Link>
 
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-                <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-2xl shadow-lg border border-amber-300 overflow-hidden">
+                <div className="grid md:grid-cols-2 gap-5">
                     {/* Left: Image */}
                     <div className="relative md:h-full h-96 bg-gray-100">
                         {ticket.image ? (
                             <Image
                                 src={ticket.image}
                                 alt={ticket.ticketTitle}
-                                fill
+                                width={500}
+                                height={500}
                                 className="object-cover"
                                 unoptimized
                             />
@@ -48,6 +49,11 @@ const TicketDetails = async ({ params }) => {
                                 No Image
                             </div>
                         )}
+                        {/* Countdown Timer */}
+                        <div className="bg-amber-50 border border-amber-200 p-5">
+                            <p className="text-amber-700 text-sm mb-1">Departure in</p>
+                            <CountdownTimer targetDate={ticket.departureDate} />
+                        </div>
                     </div>
 
                     {/* Right: Details */}
@@ -72,11 +78,7 @@ const TicketDetails = async ({ params }) => {
                             </span>
                         </div>
 
-                        {/* Countdown Timer */}
-                        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5">
-                            <p className="text-amber-700 text-sm mb-1">Departure in</p>
-                            <CountdownTimer targetDate={ticket.departureDate} />
-                        </div>
+
 
                         {/* Departure Info */}
                         <div className="space-y-1 text-sm text-gray-600">

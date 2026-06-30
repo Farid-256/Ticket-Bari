@@ -18,6 +18,27 @@ const Navbar = () => {
 
     const user = session?.user;
 
+    // Dashboard links based on role
+    const dashboardLinks = {
+        user: '/dashboard/user',
+        vendor: '/dashboard/vendor',
+        admin: '/dashboard/admin'
+    };
+
+    // Common nav links
+    const navLinks = [
+        { label: 'Home', href: '/' },
+        { label: 'All Tickets', href: '/allTickets' },
+        { label: 'About', href: '/about' },
+        { label: 'Help & Support', href: '/help' }
+    ];
+
+    // Add Dashboard link if user is logged in
+    if (user) {
+        const dashboardHref = dashboardLinks[user.role] || '/dashboard/user';
+        navLinks.push({ label: 'Dashboard', href: dashboardHref });
+    }
+
     // Logout handler
     const handleLogout = async () => {
         try {
@@ -64,52 +85,25 @@ const Navbar = () => {
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center gap-5">
-                        <Link
-                            href="/"
-                            className={`text-lg ${pathName === '/' ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
-                        >
-                            Home
-                        </Link>
-
-                        <Link
-                            href="/allTickets"
-                            className={`text-lg ${pathName === '/allTickets' ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
-                        >
-                            All Tickets
-                        </Link>
-
-                        <Link
-                            href="/dashboard/vendor"
-                            className={`text-lg ${pathName.startsWith('/dashboard') ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
-                        >
-                            Dashboard
-                        </Link>
-
-                        <Link
-                            href="/about"
-                            className={`text-lg ${pathName === '/about' ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
-                        >
-                            About
-                        </Link>
-                        
-                        <Link
-                            href="/help"
-                            className={`text-lg ${pathName === '/help' ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
-                        >
-                            Help & Support
-                        </Link>
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                className={`text-lg ${pathName === link.href ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-500 hover:text-blue-800'}`}
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
                     </div>
 
                     {/* Right Side: Login/User */}
                     <div className="flex items-center gap-4">
                         {user ? (
-                            // Logged in: Show avatar + dropdown
                             <div className="relative">
                                 <div
                                     className="cursor-pointer flex items-center gap-2"
                                     onClick={() => setShowDropdown(!showDropdown)}
                                 >
-                                    {/* Avatar with image */}
                                     <div className="w-10 h-10 rounded-full overflow-hidden bg-blue-100 flex items-center justify-center border-2 border-blue-800">
                                         {user.image ? (
                                             <Image
@@ -118,6 +112,7 @@ const Navbar = () => {
                                                 width={40}
                                                 height={40}
                                                 className="w-full h-full object-cover"
+                                                unoptimized
                                             />
                                         ) : (
                                             <span className="text-lg font-bold text-blue-800">
@@ -125,7 +120,6 @@ const Navbar = () => {
                                             </span>
                                         )}
                                     </div>
-                                    {/* User name */}
                                     <span className="hidden md:block text-blue-800 font-semibold">
                                         {user.name}
                                     </span>
@@ -138,7 +132,7 @@ const Navbar = () => {
                                             <p className="text-xs">{user.email}</p>
                                         </div>
                                         <Link
-                                            href="/dashboard/vendor"
+                                            href={dashboardLinks[user.role] || '/dashboard/user'}
                                             className="block px-6 py-3 hover:bg-gray-100 transition"
                                             onClick={() => setShowDropdown(false)}
                                         >
@@ -154,7 +148,6 @@ const Navbar = () => {
                                 )}
                             </div>
                         ) : (
-                            // Not logged in: Show Login & Register buttons
                             <div className="hidden md:flex gap-3">
                                 <Link href="/auth/login">
                                     <button className="bg-blue-800 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded-sm transition cursor-pointer">
@@ -183,27 +176,21 @@ const Navbar = () => {
                 {mobileMenuOpen && (
                     <div className="md:hidden mt-6 py-6 border-t border-gray-200">
                         <div className="flex flex-col gap-6 text-lg">
-                            <Link href="/" onClick={() => setMobileMenuOpen(false)} className="hover:text-blue-800 transition">
-                                Home
-                            </Link>
-                            <Link href="/all-tickets" onClick={() => setMobileMenuOpen(false)} className="hover:text-blue-800 transition">
-                                All Tickets
-                            </Link>
-                            <Link href="/dashboard/vendor" onClick={() => setMobileMenuOpen(false)} className="hover:text-blue-800 transition">
-                                Dashboard
-                            </Link>
-                            <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="hover:text-blue-800 transition">
-                                About
-                            </Link>
-                            <Link href="/help" onClick={() => setMobileMenuOpen(false)} className="hover:text-blue-800 transition">
-                                Help & Support
-                            </Link>
+                            {navLinks.map((link) => (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="hover:text-blue-800 transition"
+                                >
+                                    {link.label}
+                                </Link>
+                            ))}
 
                             {/* Mobile: User info or Login/Register */}
                             {user ? (
                                 <>
                                     <div className="pt-4 border-t flex items-center gap-3">
-                                        {/* Avatar kecil di mobile */}
                                         <div className="w-10 h-10 rounded-full overflow-hidden bg-blue-100 flex items-center justify-center">
                                             {user.image ? (
                                                 <Image
@@ -212,6 +199,7 @@ const Navbar = () => {
                                                     width={40}
                                                     height={40}
                                                     className="w-full h-full object-cover"
+                                                    unoptimized
                                                 />
                                             ) : (
                                                 <span className="text-lg font-bold text-blue-800">
