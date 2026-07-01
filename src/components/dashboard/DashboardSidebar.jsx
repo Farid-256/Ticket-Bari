@@ -32,7 +32,7 @@ export function DashboardSidebar() {
         },
         {
             icon: Ticket,
-            href: "/dashboard/user/bookings",
+            href: "/dashboard/user/bookingTickets",
             label: "My Booked Tickets",
         },
         {
@@ -63,7 +63,7 @@ export function DashboardSidebar() {
         },
         {
             icon: BookmarkFill,
-            href: "/dashboard/vendor/requests",
+            href: '/dashboard/vendor/requests',
             label: "Requested Bookings",
         },
         {
@@ -82,7 +82,7 @@ export function DashboardSidebar() {
         },
         {
             icon: Ticket,
-            href: "/dashboard/admin/tickets",
+            href: "/dashboard/admin/manage-tickets",
             label: "Manage Tickets",
         },
         {

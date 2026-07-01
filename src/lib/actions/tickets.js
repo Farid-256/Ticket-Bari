@@ -1,13 +1,18 @@
-'use server'
+'use server';
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-export const creatTicket = async(newTicketData)=>{
-    const res = await fetch(`${baseUrl}/api/tickets`,{
-        method: 'POST',
-        headers: {
-            'content-type' : 'application/json'
-        },
-        body: JSON.stringify(newTicketData)
-    })
-    return res.json()
-}
+import { serverFetch, serverMutation } from '../core/server';
+
+// Vendor: Create ticket
+export const creatTicket = async (newTicketData) => {
+    return serverMutation('/api/tickets', newTicketData);
+};
+
+// Admin: Update ticket status (Approve/Reject)
+export const updateTicketStatus = async (ticketId, status) => {
+    return serverMutation(`/api/tickets/${ticketId}/status`, { status }, 'PUT');
+};
+
+// Admin: Get pending tickets
+export const getPendingTickets = async () => {
+    return serverFetch('/api/tickets?status=pending');
+};

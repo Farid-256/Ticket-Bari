@@ -11,7 +11,6 @@ import { creatTicket } from "@/lib/actions/tickets";
 const AddTicket = () => {
     const { data: session } = useSession();
     const user = session?.user;
-    console.log(user)
     const [loading, setLoading] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [imagePreview, setImagePreview] = useState(null);
@@ -24,10 +23,7 @@ const AddTicket = () => {
 
     const handlePerkToggle = (perk) => {
         setSelectedPerks(prev =>
-            prev.includes(perk)
-                ? prev.filter(p => p !== perk)
-                : [...prev, perk]
-        );
+            prev.includes(perk) ? prev.filter(p => p !== perk) : [...prev, perk]);
     };
 
     // Image upload to imgbb

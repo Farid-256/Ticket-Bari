@@ -75,14 +75,6 @@ const VendorProfilePage = () => {
                                 <span className="capitalize">{user.role || 'vendor'}</span>
                             </p>
                         </div>
-
-                        {/* Edit Profile Button */}
-                        <Link href={``}>
-                            <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2.5 rounded-lg transition shadow-sm hover:shadow">
-                                <FaUserEdit size={16} />
-                                Edit Profile
-                            </button>
-                        </Link>
                     </div>
 
                     {/* Additional Stats / Info (optional) */}

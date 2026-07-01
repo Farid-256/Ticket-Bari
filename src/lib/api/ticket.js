@@ -1,24 +1,18 @@
 import { serverFetch } from "../core/server";
 
-// lib/ticket.js
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+// Public: All Tickets – only approved by default
+export const getTickets = async (status = 'approved') => {
+    const url = status ? `/api/tickets?status=${status}` : '/api/tickets';
+    return serverFetch(url);
+};
 
-export const getTickets = async()=>{
-    return serverFetch('/api/tickets')
-}
-
-export const getTicketById = async(ticketId) =>{
-    return serverFetch(`/api/allTickets/${ticketId}`)
-}
-
-
+// Vendor: Get all tickets (including pending, rejected)
 export const getVendorTickets = async (vendorId) => {
-    if (!vendorId) {
-        throw new Error('vendorId is required');
-    }
-    const res = await fetch(`${baseUrl}/api/tickets?vendorId=${vendorId}`);
-    if (!res.ok) {
-        throw new Error('Failed to fetch tickets');
-    }
-    return res.json();
+    if (!vendorId) throw new Error('vendorId is required');
+    return serverFetch(`/api/tickets?vendorId=${vendorId}`);
+};
+
+// Get single ticket
+export const getTicketById = async (ticketId) => {
+    return serverFetch(`/api/allTickets/${ticketId}`);
 };
