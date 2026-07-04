@@ -37,7 +37,7 @@ export function DashboardSidebar() {
         },
         {
             icon: FileDollar,
-            href: "/dashboard/user/transactions",
+            href: '/dashboard/user/transactions',
             label: "Transaction History",
         },
     ];
