@@ -16,3 +16,18 @@ export const updateTicketStatus = async (ticketId, status) => {
 export const getPendingTickets = async () => {
     return serverFetch('/api/tickets?status=pending');
 };
+
+// approved ticket 
+export const getApprovedTickets = async () => {
+    return serverFetch('/api/tickets/approved');
+};
+
+//advices ticket
+export const getAdvertisedTickets = async () => {
+    return serverFetch('/api/tickets/advertised');
+};
+
+//advice toggle
+export const toggleAdvertise = async (ticketId, isAdvertised) => {
+    return serverMutation(`/api/tickets/${ticketId}/advertise`, { isAdvertised }, 'PUT');
+};

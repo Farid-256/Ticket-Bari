@@ -68,7 +68,7 @@ export function DashboardSidebar() {
         },
         {
             icon: FileDollar,
-            href: "/dashboard/vendor/revenue",
+            href: '/dashboard/vendor/revenue',
             label: "Revenue Overview",
         },
     ];
@@ -87,7 +87,7 @@ export function DashboardSidebar() {
         },
         {
             icon: Persons,
-            href: "/dashboard/admin/users",
+            href: "/dashboard/admin/manage-users",
             label: "Manage Users",
         },
         {

@@ -18,4 +18,4 @@ export const createBooking = async (bookingData) => {
         throw new Error(error.message || 'Booking failed');
     }
     return res.json();
-};
+}
