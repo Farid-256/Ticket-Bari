@@ -93,7 +93,7 @@ const Footer = () => {
                             </li>
                             <li className="flex items-start gap-3">
                                 <FaFacebook className="text-amber-400 shrink-0 mt-0.5" size={18} />
-                                <a href="#" className="hover:text-amber-400 transition-colors">/TicketBari</a>
+                                <a href="#" className="hover:text-amber-400 transition-colors">TicketBari</a>
                             </li>
                         </ul>
                     </div>

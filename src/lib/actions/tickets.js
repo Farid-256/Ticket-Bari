@@ -30,4 +30,19 @@ export const getAdvertisedTickets = async () => {
 //advice toggle
 export const toggleAdvertise = async (ticketId, isAdvertised) => {
     return serverMutation(`/api/tickets/${ticketId}/advertise`, { isAdvertised }, 'PUT');
+}
+
+//latest ticket
+export const getLatestTickets = async (limit = 8) => {
+    return serverFetch(`/api/tickets/latest?limit=${limit}`);
+}
+
+//update ticket
+export const updateTicket = async (ticketId, data) => {
+    return serverMutation(`/api/tickets/${ticketId}`, data, 'PUT');
+};
+
+// Vendor: Delete ticket
+export const deleteTicket = async (ticketId, vendorId) => {
+    return serverMutation(`/api/tickets/${ticketId}?vendorId=${vendorId}`, {}, 'DELETE');
 };
