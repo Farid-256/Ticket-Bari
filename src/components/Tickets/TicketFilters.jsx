@@ -27,7 +27,7 @@ export default function TicketFilters({
                             placeholder="Dhaka"
                             value={fromLocation}
                             onChange={(e) => setFromLocation(e.target.value)}
-                            className="w-full px-4 py-2.5 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                            className="w-full px-4 py-2.5 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-400"
                         />
                         <FaSearch className="absolute left-3 top-3.5 text-gray-400" size={14} />
                     </div>
@@ -37,12 +37,9 @@ export default function TicketFilters({
                 <div>
                     <label className="text-sm font-medium text-gray-600 block mb-1">To</label>
                     <div className="relative">
-                        <input
-                            type="text"
-                            placeholder="Chittagong"
-                            value={toLocation}
+                        <input type="text" placeholder="Chittagong" value={toLocation}
                             onChange={(e) => setToLocation(e.target.value)}
-                            className="w-full px-4 py-2.5 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                            className="w-full px-4 py-2.5 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-400"
                         />
                         <FaSearch className="absolute left-3 top-3.5 text-gray-400" size={14} />
                     </div>
@@ -54,10 +51,9 @@ export default function TicketFilters({
                     <select
                         value={selectedType}
                         onChange={(e) => setSelectedType(e.target.value)}
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                    >
+                        className="w-full px-4 py-2.5 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-400">
                         {transportTypes.map((type) => (
-                            <option key={type} value={type === "All" ? "" : type}>
+                            <option className="text-gray-400" key={type} value={type === "All" ? "" : type}>
                                 {type}
                             </option>
                         ))}
@@ -70,7 +66,7 @@ export default function TicketFilters({
                     <select
                         value={sortBy}
                         onChange={(e) => setSortBy(e.target.value)}
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                        className="w-full px-4 py-2.5 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-gray-400"
                     >
                         <option value="">Default</option>
                         <option value="price_asc">Price: Low → High</option>

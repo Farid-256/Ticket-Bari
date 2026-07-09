@@ -1,76 +1,116 @@
-"use client";
+'use client';
 
-import React, { useState, useMemo } from "react";
-import TicketsCard from "@/components/Tickets/TicketsCard";
-import TicketFilters from "@/components/Tickets/TicketFilters";
+import { useState, useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+import TicketsCard from './TicketsCard';
+import TicketFilters from './TicketFilters';
 
-export default function TicketListingContainer({ initialTickets }) {
-    const [fromLocation, setFromLocation] = useState("");
-    const [toLocation, setToLocation] = useState("");
-    const [selectedType, setSelectedType] = useState("");
-    const [sortBy, setSortBy] = useState("");
+export default function TicketListingContainer({
+    initialTickets,
+    total,
+    totalPages,
+    currentPage,
+    filters: initialFilters = {},
+}) {
+    const router = useRouter();
+    const pathname = usePathname();
 
+    const [search, setSearch] = useState(initialFilters.search || '');
+    const [transportType, setTransportType] = useState(initialFilters.transportType || '');
+    const [sort, setSort] = useState(initialFilters.sort || '');
+    const [page, setPage] = useState(currentPage);
 
-    const filteredTickets = useMemo(() => {
-        let result = initialTickets;
+    // Build URL with current filters
+    const updateUrl = (newPage = page) => {
+        const params = new URLSearchParams();
+        if (search) params.set('search', search);
+        if (transportType) params.set('transportType', transportType);
+        if (sort) params.set('sort', sort);
+        if (newPage > 1) params.set('page', newPage);
+        router.push(`${pathname}?${params.toString()}`);
+    };
 
-        // From Location filter
-        if (fromLocation.trim()) {
-            const query = fromLocation.toLowerCase().trim();
-            result = result.filter((ticket) =>
-                ticket.fromLocation?.toLowerCase().includes(query)
-            );
+    // Trigger URL update when filters change
+    useEffect(() => {
+        updateUrl(1); // reset to page 1 on filter change
+    }, [search, transportType, sort]);
+
+    // Separate effect for page changes
+    useEffect(() => {
+        if (page !== currentPage) {
+            updateUrl(page);
         }
+    }, [page]);
 
-        // To Location filter
-        if (toLocation.trim()) {
-            const query = toLocation.toLowerCase().trim();
-            result = result.filter((ticket) =>
-                ticket.toLocation?.toLowerCase().includes(query)
-            );
+    // Sync page with currentPage from server if URL changes externally
+    useEffect(() => {
+        if (currentPage !== page) {
+            setPage(currentPage);
         }
+    }, [currentPage]);
 
-        // Transport Type filter
-        if (selectedType) {
-            result = result.filter((ticket) => ticket.transportType === selectedType);
+    const goToPage = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+            setPage(newPage);
         }
+    };
 
-        // Sort by price
-        if (sortBy === "price_asc") {
-            result = [...result].sort((a, b) => a.price - b.price);
-        } else if (sortBy === "price_desc") {
-            result = [...result].sort((a, b) => b.price - a.price);
-        }
-
-        return result;
-    }, [fromLocation, toLocation, selectedType, sortBy, initialTickets]);
+    // Handle filter changes from child
+    const handleFilterChange = (field, value) => {
+        if (field === 'search') setSearch(value);
+        else if (field === 'transportType') setTransportType(value);
+        else if (field === 'sort') setSort(value);
+    };
 
     return (
         <>
             <TicketFilters
-                fromLocation={fromLocation}
-                setFromLocation={setFromLocation}
-                toLocation={toLocation}
-                setToLocation={setToLocation}
-                selectedType={selectedType}
-                setSelectedType={setSelectedType}
-                sortBy={sortBy}
-                setSortBy={setSortBy}
+                fromLocation={search} // We repurpose fromLocation as search
+                setFromLocation={(val) => handleFilterChange('search', val)}
+                toLocation={''} // We don't have separate toLocation; search is combined
+                setToLocation={() => { }} // unused
+                selectedType={transportType}
+                setSelectedType={(val) => handleFilterChange('transportType', val)}
+                sortBy={sort}
+                setSortBy={(val) => handleFilterChange('sort', val)}
             />
 
             <div className="max-w-7xl mx-auto mb-4 text-sm text-gray-500">
-                Showing {filteredTickets.length} ticket{filteredTickets.length !== 1 && "s"}
+                Showing {initialTickets.length} of {total} tickets
             </div>
 
-            {filteredTickets.length > 0 ? (
-                <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-                    {filteredTickets.map((ticket) => (
+            {initialTickets.length === 0 ? (
+                <div className="max-w-7xl mx-auto bg-white rounded-xl border border-gray-200 p-12 text-center">
+                    <p className="text-gray-500 text-lg">No tickets found.</p>
+                </div>
+            ) : (
+                <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {initialTickets.map((ticket) => (
                         <TicketsCard key={ticket._id} ticket={ticket} />
                     ))}
                 </div>
-            ) : (
-                <div className="text-center py-20 border border-dashed border-gray-300 rounded-3xl max-w-7xl mx-auto">
-                    <p className="text-gray-500 text-lg">No tickets match your filters.</p>
+            )}
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+                <div className="max-w-7xl mx-auto flex justify-center items-center gap-4 mt-8">
+                    <button
+                        onClick={() => goToPage(page - 1)}
+                        disabled={page <= 1}
+                        className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-300 transition"
+                    >
+                        Previous
+                    </button>
+                    <span className="text-sm text-gray-600">
+                        Page {page} of {totalPages}
+                    </span>
+                    <button
+                        onClick={() => goToPage(page + 1)}
+                        disabled={page >= totalPages}
+                        className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-300 transition"
+                    >
+                        Next
+                    </button>
                 </div>
             )}
         </>

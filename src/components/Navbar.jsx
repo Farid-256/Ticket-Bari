@@ -8,6 +8,7 @@ import { Menu, X } from "lucide-react";
 import { useSession } from "@/lib/auth-client";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
+import { ThemeToggle } from "./ThemeToggle";
 
 const Navbar = () => {
     const pathName = usePathname();
@@ -70,8 +71,11 @@ const Navbar = () => {
         );
     }
 
+
+
     return (
         <nav className="bg-amber-50 border-b sticky top-0 z-50 shadow-sm">
+
             <div className="max-w-7xl mx-auto px-5 py-5">
                 <div className="flex justify-between items-center">
 
@@ -98,6 +102,9 @@ const Navbar = () => {
 
                     {/* Right Side: Login/User */}
                     <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-4">
+                            <ThemeToggle />
+                        </div>
                         {user ? (
                             <div className="relative">
                                 <div

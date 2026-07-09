@@ -12,7 +12,7 @@ const routes = [
 const PopularRoutes = () => {
     return (
         <section className="max-w-7xl mx-auto px-4 py-12">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Popular Routes</h2>
+            <h2 className="text-2xl font-bold text-gray-400 mb-6 text-center">Popular Routes</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {routes.map((route) => (
                     <div key={route.id} className="bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition group">

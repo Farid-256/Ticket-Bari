@@ -1,9 +1,18 @@
 import { serverFetch } from "../core/server";
 
-// Public: All Tickets – only approved by default
-export const getTickets = async (status = 'approved') => {
-    const url = status ? `/api/tickets?status=${status}` : '/api/tickets';
-    return serverFetch(url);
+// Public: All Tickets – only approved by default with filters and pagination
+export const getTickets = async (params = {}) => {
+    const { page = 1, limit = 6, search = '', transportType = '', sort = '' } = params;
+    const query = new URLSearchParams({
+        page,
+        limit,
+        status: 'approved', // always show approved
+        ...(search && { search }),
+        ...(transportType && { transportType }),
+        ...(sort && { sort }),
+    }).toString();
+
+    return serverFetch(`/api/tickets?${query}`);
 };
 
 // Vendor: Get all tickets (including pending, rejected)

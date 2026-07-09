@@ -130,7 +130,7 @@ const AddTicket = () => {
     return (
         <div className="max-w-4xl mx-auto p-6">
             <div className="mb-6">
-                <h1 className="text-2xl font-bold text-gray-800">Add New Ticket</h1>
+                <h1 className="text-2xl font-bold text-gray-400">Add New Ticket</h1>
                 <p className="text-sm text-gray-500">Fill out the details to add a new ticket</p>
             </div>
 
@@ -146,7 +146,9 @@ const AddTicket = () => {
                             name="ticketTitle"
                             required
                             placeholder="e.g. Dhaka to Chittagong Bus"
-                            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg 
+                            focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none 
+                            transition text-gray-400"
                         />
                     </div>
 
@@ -161,7 +163,9 @@ const AddTicket = () => {
                                 name="fromLocation"
                                 required
                                 placeholder="e.g. Dhaka"
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg
+                                 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none 
+                                 transition text-gray-400"
                             />
                         </div>
                         <div>
@@ -173,7 +177,7 @@ const AddTicket = () => {
                                 name="toLocation"
                                 required
                                 placeholder="e.g. Chittagong"
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                             />
                         </div>
                     </div>
@@ -187,7 +191,7 @@ const AddTicket = () => {
                             <select
                                 name="transportType"
                                 required
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white"
+                                className="text-gray-400 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white"
                             >
                                 <option value="">Select Transport</option>
                                 <option value="Bus">Bus</option>
@@ -207,7 +211,7 @@ const AddTicket = () => {
                                 min="0"
                                 step="0.01"
                                 placeholder="e.g. 500"
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                                className="text-gray-400 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                             />
                         </div>
                     </div>
@@ -224,7 +228,7 @@ const AddTicket = () => {
                                 required
                                 min="1"
                                 placeholder="e.g. 10"
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                                className="text-gray-400 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                             />
                         </div>
                         <div>
@@ -235,7 +239,7 @@ const AddTicket = () => {
                                 type="datetime-local"
                                 name="departureDate"
                                 required
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                                className="text-gray-400 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                             />
                         </div>
                     </div>

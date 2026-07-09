@@ -34,7 +34,7 @@ const TicketsCard = ({ ticket }) => {
                     Transport: {ticket.transportType}
                 </p>
                 <p className="text-sm font-medium text-blue-600">
-                    ৳{ticket.price} / unit
+                    {ticket.price} Taka / unit
                 </p>
                 <div className="flex justify-between text-xs text-gray-600">
                     <span>Qty: {ticket.ticketQuantity}</span>
