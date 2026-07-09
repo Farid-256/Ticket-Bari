@@ -2,12 +2,21 @@ import { serverFetch } from "../core/server";
 
 // Public: All Tickets – only approved by default with filters and pagination
 export const getTickets = async (params = {}) => {
-    const { page = 1, limit = 6, search = '', transportType = '', sort = '' } = params;
+    const {
+        page = 1,
+        limit = 6,
+        fromLocation = '',
+        toLocation = '',
+        transportType = '',
+        sort = '',
+    } = params;
+
     const query = new URLSearchParams({
         page,
         limit,
-        status: 'approved', // always show approved
-        ...(search && { search }),
+        status: 'approved',
+        ...(fromLocation && { fromLocation }),
+        ...(toLocation && { toLocation }),
         ...(transportType && { transportType }),
         ...(sort && { sort }),
     }).toString();
@@ -15,13 +24,14 @@ export const getTickets = async (params = {}) => {
     return serverFetch(`/api/tickets?${query}`);
 };
 
-// Vendor: Get all tickets (including pending, rejected)
+// Vendor: Get all tickets (including pending, rejected) – ALWAYS returns array
 export const getVendorTickets = async (vendorId) => {
     if (!vendorId) throw new Error('vendorId is required');
-    return serverFetch(`/api/tickets?vendorId=${vendorId}`);
+    const data = await serverFetch(`/api/tickets?vendorId=${vendorId}`);
+    return Array.isArray(data) ? data : (data?.tickets || []);
 };
 
-// Get single ticket
+// Get single ticket (returns object)
 export const getTicketById = async (ticketId) => {
     return serverFetch(`/api/allTickets/${ticketId}`);
 };

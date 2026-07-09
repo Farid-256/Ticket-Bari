@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth'; // যদি তোমার session থাকে
 import { getUserSession } from '@/lib/core/sesson';
 
 export async function GET(req) {

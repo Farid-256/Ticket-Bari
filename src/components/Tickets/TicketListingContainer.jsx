@@ -15,7 +15,9 @@ export default function TicketListingContainer({
     const router = useRouter();
     const pathname = usePathname();
 
-    const [search, setSearch] = useState(initialFilters.search || '');
+    // State for filters
+    const [fromLocation, setFromLocation] = useState(initialFilters.fromLocation || '');
+    const [toLocation, setToLocation] = useState(initialFilters.toLocation || '');
     const [transportType, setTransportType] = useState(initialFilters.transportType || '');
     const [sort, setSort] = useState(initialFilters.sort || '');
     const [page, setPage] = useState(currentPage);
@@ -23,17 +25,18 @@ export default function TicketListingContainer({
     // Build URL with current filters
     const updateUrl = (newPage = page) => {
         const params = new URLSearchParams();
-        if (search) params.set('search', search);
+        if (fromLocation) params.set('fromLocation', fromLocation);
+        if (toLocation) params.set('toLocation', toLocation);
         if (transportType) params.set('transportType', transportType);
         if (sort) params.set('sort', sort);
         if (newPage > 1) params.set('page', newPage);
         router.push(`${pathname}?${params.toString()}`);
     };
 
-    // Trigger URL update when filters change
+    // Trigger URL update when any filter changes (reset to page 1)
     useEffect(() => {
-        updateUrl(1); // reset to page 1 on filter change
-    }, [search, transportType, sort]);
+        updateUrl(1);
+    }, [fromLocation, toLocation, transportType, sort]);
 
     // Separate effect for page changes
     useEffect(() => {
@@ -55,24 +58,17 @@ export default function TicketListingContainer({
         }
     };
 
-    // Handle filter changes from child
-    const handleFilterChange = (field, value) => {
-        if (field === 'search') setSearch(value);
-        else if (field === 'transportType') setTransportType(value);
-        else if (field === 'sort') setSort(value);
-    };
-
     return (
         <>
             <TicketFilters
-                fromLocation={search} // We repurpose fromLocation as search
-                setFromLocation={(val) => handleFilterChange('search', val)}
-                toLocation={''} // We don't have separate toLocation; search is combined
-                setToLocation={() => { }} // unused
+                fromLocation={fromLocation}
+                setFromLocation={setFromLocation}
+                toLocation={toLocation}
+                setToLocation={setToLocation}
                 selectedType={transportType}
-                setSelectedType={(val) => handleFilterChange('transportType', val)}
+                setSelectedType={setTransportType}
                 sortBy={sort}
-                setSortBy={(val) => handleFilterChange('sort', val)}
+                setSortBy={setSort}
             />
 
             <div className="max-w-7xl mx-auto mb-4 text-sm text-gray-500">

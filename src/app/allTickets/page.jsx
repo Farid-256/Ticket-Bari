@@ -5,13 +5,14 @@ export default async function AllTicketsPage({ searchParams }) {
     const params = await searchParams;
     const page = parseInt(params.page) || 1;
     const limit = 6;
-    const search = params.search || '';
+    const fromLocation = params.fromLocation || '';
+    const toLocation = params.toLocation || '';
     const transportType = params.transportType || '';
     const sort = params.sort || '';
 
     let data = { tickets: [], total: 0, totalPages: 1, page: 1 };
     try {
-        data = await getTickets({ page, limit, search, transportType, sort });
+        data = await getTickets({ page, limit, fromLocation, toLocation, transportType, sort });
     } catch (error) {
         console.error('Error fetching tickets:', error);
     }
@@ -27,7 +28,7 @@ export default async function AllTicketsPage({ searchParams }) {
                 total={data.total || 0}
                 totalPages={data.totalPages || 1}
                 currentPage={data.page || 1}
-                filters={{ search, transportType, sort }}
+                filters={{ fromLocation, toLocation, transportType, sort }}
             />
         </div>
     );

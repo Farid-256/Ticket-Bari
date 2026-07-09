@@ -1,5 +1,6 @@
+import { DeleteButton } from '@/components/DeleteButton';
 import { Update } from '@/components/update';
-import { DeleteButton } from '@/components/DeleteButton'; // ← এটা ইম্পোর্ট করো
+
 import { getVendorTickets } from '@/lib/api/ticket';
 import { getUserSession } from '@/lib/core/sesson';
 import Image from 'next/image';
@@ -85,7 +86,7 @@ const MyAddedTicket = async () => {
                             </div>
                             <div className="flex gap-2 mt-3">
                                 <Update ticket={ticket} userId={user.id} />
-                                {/* ✅ DeleteButton*/}
+                                {/* DeleteButton*/}
                                 <DeleteButton
                                     ticketId={ticket._id}
                                     userId={user.id}
