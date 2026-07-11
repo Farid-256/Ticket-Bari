@@ -80,12 +80,12 @@ const Navbar = () => {
                 <div className="flex justify-between items-center">
 
                     {/* Logo */}
-                    <div className="flex items-center gap-2">
-                        <Image className="rounded-full" src="/assets/navlogo.png" height={100} width={100} alt="logo" />
+                    <Link href='/' className="flex items-center gap-2">
+                        <Image src="/assets/logo.jpg" height={80} width={80} alt="logo" />
                         <h3 className="text-3xl font-bold text-blue-800">
                             Ticket <span className="text-amber-600">Bari</span>
                         </h3>
-                    </div>
+                    </Link>
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center gap-5">

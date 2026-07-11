@@ -26,11 +26,11 @@ const Footer = () => {
                     <div className="space-y-4">
                         <div className="flex items-center gap-2">
                             <Image
-                                src="/assets/navlogo.png"
-                                height={50}
-                                width={50}
+                                src="/assets/logo.jpg"
+                                height={100}
+                                width={100}
                                 alt="Ticket Bari Logo"
-                                className="rounded-full"
+                                className='rounded-sm'
                             />
                             <h3 className="text-2xl font-bold text-white">
                                 Ticket <span className="text-amber-500">Bari</span>

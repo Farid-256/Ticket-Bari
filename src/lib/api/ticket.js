@@ -1,4 +1,4 @@
-import { serverFetch } from "../core/server";
+import { serverFetch, protectedFetch } from "../core/server";
 
 // Public: All Tickets – only approved by default with filters and pagination
 export const getTickets = async (params = {}) => {
@@ -24,14 +24,14 @@ export const getTickets = async (params = {}) => {
     return serverFetch(`/api/tickets?${query}`);
 };
 
-// Vendor: Get all tickets (including pending, rejected) – ALWAYS returns array
+// Vendor: Get all tickets (including pending, rejected) – PRIVATE
 export const getVendorTickets = async (vendorId) => {
     if (!vendorId) throw new Error('vendorId is required');
-    const data = await serverFetch(`/api/tickets?vendorId=${vendorId}`);
+    const data = await protectedFetch(`/api/tickets?vendorId=${vendorId}`);
     return Array.isArray(data) ? data : (data?.tickets || []);
 };
 
-// Get single ticket (returns object)
+// Get single ticket (public)
 export const getTicketById = async (ticketId) => {
     return serverFetch(`/api/allTickets/${ticketId}`);
 };

@@ -2,9 +2,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const getBookingsByUser = async (userId) => {
     if (!userId) throw new Error('userId is required');
-    const res = await fetch(`${baseUrl}/api/bookings?userId=${userId}`);
-    if (!res.ok) throw new Error('Failed to fetch bookings');
-    return res.json();
+    return protectedFetch(`/api/bookings?userId=${userId}`);
 };
 
 export const createBooking = async (bookingData) => {

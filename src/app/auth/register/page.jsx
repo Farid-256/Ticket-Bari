@@ -34,6 +34,12 @@ const Register = () => {
         }
     };
 
+    const handleRegister = async() =>{
+        await authClient.signIn.social({
+            provider: 'google'
+        })
+    }
+
     return (
         <div className="min-h-[70vh] flex items-center justify-center px-4 py-8">
             <div className="w-full max-w-4xl bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
@@ -127,12 +133,7 @@ const Register = () => {
                         </div>
 
                         <button
-                            onClick={async () => {
-                                await authClient.signIn.social({
-                                    provider: 'google',
-                                    callbackURL: '/',
-                                });
-                            }}
+                        onClick={handleRegister}
                             className="w-full flex items-center justify-center gap-3 border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-3 rounded-xl transition"
                         >
                             <svg className="w-5 h-5" viewBox="0 0 48 48">

@@ -17,6 +17,18 @@ export const serverFetch = async (path) => {
         throw new Error(error.message || 'Fetch failed');
     }
     return res.json();
+}
+
+//jwt6
+export const protectedFetch = async (path) => {
+    const res = await fetch(`${baseUrl}${path}`, {
+        headers: await authHeader()
+    });
+    if (!res.ok) {
+        const error = await res.json().catch(() => ({}));
+        throw new Error(error.message || 'Protected fetch failed');
+    }
+    return res.json();
 };
 
 export const serverMutation = async (path, data, method = 'POST') => {
