@@ -1,6 +1,6 @@
 'use server';
 
-import { serverFetch, serverMutation } from '../core/server';
+import { protectedFetch, serverFetch, serverMutation } from '../core/server';
 
 // Vendor: Create ticket
 export const creatTicket = async (newTicketData) => {
@@ -14,12 +14,12 @@ export const updateTicketStatus = async (ticketId, status) => {
 
 // Admin: Get pending tickets
 export const getPendingTickets = async () => {
-    return serverFetch('/api/tickets?status=pending');
+    return protectedFetch('/api/tickets?status=pending');
 };
 
 // approved ticket 
 export const getApprovedTickets = async () => {
-    return serverFetch('/api/tickets/approved');
+    return protectedFetch('/api/tickets/approved');
 };
 
 //advices ticket

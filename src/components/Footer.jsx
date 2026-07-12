@@ -126,7 +126,7 @@ const Footer = () => {
                     </div>
                 </div>
 
-                {/* নিচের বার */}
+   
                 <div className="mt-16 pt-6 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-4">
                     <p className="text-sm text-gray-500">
                         &copy; {currentYear} TicketBari. All rights reserved.

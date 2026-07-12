@@ -31,7 +31,7 @@ const TransactionsTable = ({ transactions }) => {
                                     {tx.ticketTitle}
                                 </td>
                                 <td className="px-6 py-4 font-medium text-blue-600">
-                                    ৳{tx.amount}
+                                    {tx.amount} Taka
                                 </td>
                                 <td className="px-6 py-4 text-gray-600">
                                     {new Date(tx.paymentDate).toLocaleString()}

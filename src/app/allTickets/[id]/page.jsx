@@ -68,13 +68,13 @@ const TicketDetails = async ({ params }) => {
 
                         <div className="flex flex-wrap gap-3 text-sm">
                             <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full">
-                                🚍 {ticket.transportType}
+                                {ticket.transportType}
                             </span>
                             <span className="bg-green-50 text-green-700 px-3 py-1 rounded-full">
-                                ৳{ticket.price} / unit
+                                {ticket.price} Taka / unit
                             </span>
                             <span className="bg-gray-50 text-gray-700 px-3 py-1 rounded-full">
-                                🎫 {ticket.ticketQuantity} left
+                                {ticket.ticketQuantity} left
                             </span>
                         </div>
 

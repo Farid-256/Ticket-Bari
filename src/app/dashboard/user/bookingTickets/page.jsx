@@ -60,7 +60,7 @@ const BookingTickets = async () => {
                                 {booking.fromLocation} → {booking.toLocation}
                             </p>
                             <p className="text-sm font-medium text-blue-600 mt-1">
-                                ৳{booking.totalPrice} (Qty: {booking.bookingQuantity})
+                                {booking.totalPrice} Taka (Qty: {booking.bookingQuantity})
                             </p>
                             <p className="text-sm text-gray-600">
                                 Departure: {new Date(booking.departureDate).toLocaleString()}

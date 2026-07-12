@@ -1,45 +1,40 @@
-// import { redirect } from 'next/navigation'
+import Link from "next/link";
+import { FaCheckCircle } from "react-icons/fa";
 
-// import { stripe } from '../../lib/stripe'
-
-// export default async function Success({ searchParams }) {
-//     const { session_id } = await searchParams
-
-//     if (!session_id)
-//         throw new Error('Please provide a valid session_id (`cs_test_...`)')
-
-//     const {
-//         status,
-//         customer_details: { email: customerEmail }
-//     } = await stripe.checkout.sessions.retrieve(session_id, {
-//         expand: ['line_items', 'payment_intent']
-//     })
-
-//     if (status === 'open') {
-//         return redirect('/')
-//     }
-
-//     if (status === 'complete') {
-//         return (
-//             <section id="success">
-//                 <p>
-//                     We appreciate your business! A confirmation email will be sent to{' '}
-//                     {customerEmail}. If you have any questions, please email{' '}
-//                     <a href="mailto:orders@example.com">orders@example.com</a>.
-//                 </p>
-//             </section>
-//         )
-//     }
-// }
-
-import React from 'react';
-
-const page = () => {
+const SuccessPage = () => {
     return (
-        <div>
-            <h3>Success</h3>
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+            <div className="bg-white shadow-xl rounded-2xl p-10 max-w-md w-full text-center">
+
+                <FaCheckCircle className="text-green-500 text-7xl mx-auto mb-5" />
+
+                <h1 className="text-3xl font-bold text-gray-800">
+                    Payment Successful!
+                </h1>
+
+                <p className="text-gray-600 mt-3">
+                    Thank you for your purchase.
+                    Your ticket has been booked successfully.
+                </p>
+
+                <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+                    <Link
+                        href="/allTickets"
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition"
+                    >
+                        My Bookings
+                    </Link>
+
+                    <Link
+                        href="/allTickets"
+                        className="border border-gray-300 hover:bg-gray-100 px-6 py-3 rounded-lg transition"
+                    >
+                        Book More Tickets
+                    </Link>
+                </div>
+            </div>
         </div>
     );
 };
 
-export default page;
+export default SuccessPage;
