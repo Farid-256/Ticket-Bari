@@ -1,7 +1,7 @@
 import { getUserToken } from "./sesson";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-//jwt2
+
 export const authHeader = async () => {
     const token = await getUserToken();
     const header = token ? {
@@ -18,18 +18,6 @@ export const serverFetch = async (path) => {
     }
     return res.json();
 }
-
-//jwt6
-export const protectedFetch = async (path) => {
-    const res = await fetch(`${baseUrl}${path}`, {
-        headers: await authHeader()
-    });
-    if (!res.ok) {
-        const error = await res.json().catch(() => ({}));
-        throw new Error(error.message || 'Protected fetch failed');
-    }
-    return res.json();
-};
 
 export const serverMutation = async (path, data, method = 'POST') => {
     const res = await fetch(`${baseUrl}${path}`, {
@@ -48,4 +36,4 @@ export const serverMutation = async (path, data, method = 'POST') => {
     }
 
     return res.json();
-};
+}

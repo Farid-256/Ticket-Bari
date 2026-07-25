@@ -5,13 +5,8 @@ import { useRouter, usePathname } from 'next/navigation';
 import TicketsCard from './TicketsCard';
 import TicketFilters from './TicketFilters';
 
-export default function TicketListingContainer({
-    initialTickets,
-    total,
-    totalPages,
-    currentPage,
-    filters: initialFilters = {},
-}) {
+export default function TicketListingContainer({ initialTickets, total, totalPages, currentPage, 
+    filters: initialFilters = {} }) {
     const router = useRouter();
     const pathname = usePathname();
 
@@ -103,8 +98,7 @@ export default function TicketListingContainer({
                     <button
                         onClick={() => goToPage(page + 1)}
                         disabled={page >= totalPages}
-                        className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-300 transition"
-                    >
+                        className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-300 transition">
                         Next
                     </button>
                 </div>

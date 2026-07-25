@@ -1,36 +1,25 @@
-'use client';
 
-import { useSession } from "@/lib/auth-client";
+import { getUserSession } from "@/lib/core/sesson";
 import Image from "next/image";
 import Link from "next/link";
-import { FaUserEdit, FaEnvelope, FaUserTag,} from "react-icons/fa";
+import { FaEnvelope, FaUserTag } from "react-icons/fa";
+import { redirect } from "next/navigation";
+import { getVendorTickets } from "@/lib/api/ticket";
 
-const VendorProfilePage = () => {
-    const { data: session, isPending } = useSession();
-
-    if (isPending) {
-        return (
-            <div className="flex justify-center items-center h-64">
-                <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-            </div>
-        );
+const VendorProfilePage = async () => {
+    const user = await getUserSession();
+    if (!user || user.role !== 'vendor') {
+        redirect('/unauthorized');
     }
 
-    const user = session?.user;
-
-    if (!user) {
-        return (
-            <div className="text-center py-12">
-                <p className="text-gray-500">No user data found. Please login again.</p>
-            </div>
-        );
+    let tickets = [];
+    try {
+        tickets = await getVendorTickets(user.id);
+    } catch (error) {
+        console.error('Error fetching vendor tickets:', error);
     }
 
-    // Get initial for avatar
-    const getInitial = (name) => {
-        if (!name) return 'U';
-        return name.charAt(0).toUpperCase();
-    };
+    const getInitial = (name) => name?.charAt(0).toUpperCase() || 'U';
 
     return (
         <div className="max-w-4xl mx-auto p-6">
@@ -40,7 +29,6 @@ const VendorProfilePage = () => {
                 <div className="bg-amber-50 h-32 md:h-40 relative">
                     <div className="absolute -bottom-12 left-6 md:left-10">
                         <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white p-1 shadow-lg flex items-center justify-center">
-
                             {user.image ? (
                                 <Image
                                     src={user.image}
@@ -77,10 +65,10 @@ const VendorProfilePage = () => {
                         </div>
                     </div>
 
-                    {/* Additional Stats / Info (optional) */}
+                    {/* Stats */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 pt-6 border-t border-gray-200">
                         <div className="bg-gray-50 rounded-xl p-4 text-center">
-                            <p className="text-2xl font-bold text-blue-600">0</p>
+                            <p className="text-2xl font-bold text-blue-600">{tickets.length}</p>
                             <p className="text-sm text-gray-500">Total Tickets</p>
                         </div>
                         <div className="bg-gray-50 rounded-xl p-4 text-center">
@@ -99,7 +87,6 @@ const VendorProfilePage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
                 <Link href="/dashboard/vendor/add-ticket">
                     <div className="bg-white border border-gray-200 rounded-xl p-6 text-center hover:shadow-md transition cursor-pointer hover:border-blue-400">
-
                         <h3 className="font-semibold text-gray-800">Add New Ticket</h3>
                         <p className="text-sm text-gray-500">Post a new ticket</p>
                     </div>

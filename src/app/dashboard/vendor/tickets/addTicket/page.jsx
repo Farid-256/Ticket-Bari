@@ -2,11 +2,12 @@
 
 import { useSession } from "@/lib/auth-client";
 import { useState, useRef } from "react";
-import { redirect } from "next/navigation";
+
 import { toast } from "react-toastify";
 import Image from "next/image";
 import { FaCloudUploadAlt, FaPlus, FaSpinner } from "react-icons/fa";
 import { creatTicket } from "@/lib/actions/tickets";
+
 
 const AddTicket = () => {
     const { data: session } = useSession();
@@ -60,28 +61,25 @@ const AddTicket = () => {
                 setImagePreview(url);
                 toast.success('Image uploaded successfully!');
             } else {
-                toast.error('Image upload failed. Please try again.');
+                console.error(data);
+                toast.error(data.error?.message || "Image upload failed");
             }
         } catch (error) {
+            console.error(error);
             toast.error('Error uploading image. Please try again.');
         } finally {
             setUploading(false);
         }
-    };
+    }
 
     // Submit form
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formData = new FormData(e.target);
+        setLoading(true);
+
+        const formData = new FormData(e.currentTarget);
         const ticketData = Object.fromEntries(formData.entries());
 
-        // Validate
-        if (!imageUrl) {
-            toast.error('Please upload an image');
-            return;
-        }
-
-        // Prepare data
         const dataToSubmit = {
             ticketTitle: ticketData.ticketTitle,
             fromLocation: ticketData.fromLocation,
@@ -96,27 +94,27 @@ const AddTicket = () => {
             vendorName: user?.name,
             vendorEmail: user?.email,
             status: 'pending',
-        };
+        }
 
-        setLoading(true);
         try {
-            const res = await creatTicket(dataToSubmit);
-            if (res.insertedId) {
+            const result = await creatTicket(dataToSubmit);
+
+            if (result.insertedId) {
                 toast.success('Ticket added successfully!');
                 e.target.reset();
                 setImagePreview(null);
                 setImageUrl('');
                 setSelectedPerks([]);
-                redirect('/dashboard/tickets')
             } else {
                 toast.error('Failed to add ticket. Please try again.');
             }
         } catch (error) {
-            toast.error('Data Added Sucessfully');
+            console.error(error);
+            toast.error('Failed to add ticket. Please try again.');
         } finally {
             setLoading(false);
         }
-    };
+    }
 
     // If not vendor, redirect
     if (!user || user.role !== 'vendor') {
@@ -191,8 +189,7 @@ const AddTicket = () => {
                             <select
                                 name="transportType"
                                 required
-                                className="text-gray-400 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white"
-                            >
+                                className="text-gray-400 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-white">
                                 <option value="">Select Transport</option>
                                 <option value="Bus">Bus</option>
                                 <option value="Train">Train</option>
@@ -251,16 +248,10 @@ const AddTicket = () => {
                         </label>
                         <div className="flex flex-wrap gap-3">
                             {perkOptions.map((perk) => (
-                                <label
-                                    key={perk}
-                                    className="flex items-center gap-2 cursor-pointer"
-                                >
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedPerks.includes(perk)}
+                                <label key={perk} className="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" checked={selectedPerks.includes(perk)}
                                         onChange={() => handlePerkToggle(perk)}
-                                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                                    />
+                                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
                                     <span className="text-sm text-gray-700">{perk}</span>
                                 </label>
                             ))}

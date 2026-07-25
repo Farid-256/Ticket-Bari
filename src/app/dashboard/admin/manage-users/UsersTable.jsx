@@ -17,7 +17,6 @@ const UsersTable = ({ initialUsers }) => {
             const result = await updateUserRole(userId, newRole);
             if (result.success) {
                 toast.success(`User role updated to ${newRole}`);
-                // ইউজার লিস্ট আপডেট করো
                 setUsers(prev => prev.map(u =>
                     u._id === userId ? { ...u, role: newRole } : u
                 ));
@@ -128,7 +127,7 @@ const UsersTable = ({ initialUsers }) => {
                                                 </button>
                                             )}
 
-                                            {/* Mark as Fraud (শুধু vendor) */}
+                                            {/* Mark as Fraud (vendor) */}
                                             {user.role === 'vendor' && !isFraud && (
                                                 <button
                                                     onClick={() => handleMarkFraud(user._id)}

@@ -1,10 +1,10 @@
-import { protectedFetch } from "../core/server";
+import { serverFetch } from "../core/server";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const getBookingsByUser = async (userId) => {
     if (!userId) throw new Error('userId is required');
-    return protectedFetch(`/api/bookings?userId=${userId}`);
+    return serverFetch(`/api/bookings?userId=${userId}`);
 };
 
 export const createBooking = async (bookingData) => {

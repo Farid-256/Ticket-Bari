@@ -1,4 +1,5 @@
-import { serverFetch, protectedFetch } from "../core/server";
+import { serverFetch } from "../core/server";
+
 
 // Public: All Tickets – only approved by default with filters and pagination
 export const getTickets = async (params = {}) => {
@@ -9,12 +10,13 @@ export const getTickets = async (params = {}) => {
         toLocation = '',
         transportType = '',
         sort = '',
+        status = 'approved'
     } = params;
 
     const query = new URLSearchParams({
         page,
         limit,
-        status: 'approved',
+        ...(status && { status }),
         ...(fromLocation && { fromLocation }),
         ...(toLocation && { toLocation }),
         ...(transportType && { transportType }),
@@ -24,12 +26,12 @@ export const getTickets = async (params = {}) => {
     return serverFetch(`/api/tickets?${query}`);
 };
 
-// Vendor: Get all tickets (including pending, rejected) – PRIVATE
+// Vendor: Get all tickets (including pending, rejected) – PRIVATE(updated)
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 export const getVendorTickets = async (vendorId) => {
-    if (!vendorId) throw new Error('vendorId is required');
-    const data = await protectedFetch(`/api/tickets?vendorId=${vendorId}`);
-    return Array.isArray(data) ? data : (data?.tickets || []);
-};
+    const res = await fetch(`${baseUrl}/api/tickets?vendorId=${vendorId}`)
+    return res.json()
+}
 
 // Get single ticket (public)
 export const getTicketById = async (ticketId) => {

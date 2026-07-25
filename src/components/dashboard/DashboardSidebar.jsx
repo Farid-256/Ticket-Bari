@@ -1,8 +1,8 @@
-'use client';
+'use client'
 
-import { useSession } from "@/lib/auth-client";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+import { useSession } from "@/lib/auth-client"
+import { usePathname } from "next/navigation"
+import Link from "next/link"
 import {
     House,
     CirclePlus,
@@ -13,14 +13,14 @@ import {
     Persons,
     Megaphone
 } from "@gravity-ui/icons";
-import { Button, Drawer } from "@heroui/react";
+import { Button, Drawer } from "@heroui/react"
 import { useState } from "react";
 
 export function DashboardSidebar() {
     const pathname = usePathname();
-    const { data: session } = useSession();
-    const user = session?.user;
-    const [mobileOpen, setMobileOpen] = useState(false);
+    const { data: session } = useSession()
+    const user = session?.user
+    const [mobileOpen, setMobileOpen] = useState(false)
 
     // USER
 
@@ -53,12 +53,12 @@ export function DashboardSidebar() {
         },
         {
             icon: CirclePlus,
-            href: "/dashboard/vendor/addTicket",
+            href: "/dashboard/vendor/tickets/addTicket",
             label: "Add Ticket",
         },
         {
             icon: Ticket,
-            href: "/dashboard/vendor/myAddedTicket",
+            href: "/dashboard/vendor/tickets",
             label: "My Added Tickets",
         },
         {
@@ -104,15 +104,15 @@ export function DashboardSidebar() {
         admin: adminNavItems,
     };
 
-    const navItems = navMap[user?.role] || userNavItems;
+    const navItems = navMap[user?.role] || userNavItems
 
-    // ✅ সঠিক isActive – exact match only
-    const isActive = (href) => pathname === href;
+    // isActive – exact match only
+    const isActive = (href) => pathname === href
 
     const navContent = (
         <nav className="flex flex-col gap-1">
             {navItems.map((item) => {
-                const active = isActive(item.href);
+                const active = isActive(item.href)
 
                 return (
                     <Link
@@ -184,5 +184,5 @@ export function DashboardSidebar() {
                 </Drawer.Backdrop>
             </Drawer>
         </>
-    );
+    )
 }

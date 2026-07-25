@@ -68,4 +68,4 @@ const TicketsCard = ({ ticket }) => {
     );
 };
 
-export default TicketsCard;
+export default TicketsCard

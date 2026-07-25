@@ -1,31 +1,31 @@
 'use server';
+import { serverFetch, serverMutation } from '../core/server';
 
-import { protectedFetch, serverFetch, serverMutation } from '../core/server';
 
-// Vendor: Create ticket
+// Vendor: Create ticket (updated)
 export const creatTicket = async (newTicketData) => {
-    return serverMutation('/api/tickets', newTicketData);
-};
+    return serverMutation('/api/tickets', newTicketData)
+}
 
 // Admin: Update ticket status (Approve/Reject)
 export const updateTicketStatus = async (ticketId, status) => {
     return serverMutation(`/api/tickets/${ticketId}/status`, { status }, 'PUT');
-};
+}
 
 // Admin: Get pending tickets
 export const getPendingTickets = async () => {
-    return protectedFetch('/api/tickets?status=pending');
-};
+    return serverFetch('/api/tickets?status=pending');
+}
 
 // approved ticket 
 export const getApprovedTickets = async () => {
-    return protectedFetch('/api/tickets/approved');
-};
+    return serverFetch('/api/tickets/approved');
+}
 
 //advices ticket
 export const getAdvertisedTickets = async () => {
     return serverFetch('/api/tickets/advertised');
-};
+}
 
 //advice toggle
 export const toggleAdvertise = async (ticketId, isAdvertised) => {
@@ -40,9 +40,9 @@ export const getLatestTickets = async (limit = 8) => {
 //update ticket
 export const updateTicket = async (ticketId, data) => {
     return serverMutation(`/api/tickets/${ticketId}`, data, 'PUT');
-};
+}
 
 // Vendor: Delete ticket
 export const deleteTicket = async (ticketId, vendorId) => {
     return serverMutation(`/api/tickets/${ticketId}?vendorId=${vendorId}`, {}, 'DELETE');
-};
+}

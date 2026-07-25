@@ -1,10 +1,10 @@
 'use server';
 
-import { protectedFetch, serverMutation } from '../core/server';
+import { serverFetch, serverMutation } from '../core/server';
 
 
 export const getAllUsers = async () => {
-    return protectedFetch('/api/users');
+    return serverFetch('/api/users');
 };
 
 

@@ -36,14 +36,8 @@ const TicketDetails = async ({ params }) => {
                     {/* Left: Image */}
                     <div className="relative md:h-full h-96 bg-gray-100">
                         {ticket.image ? (
-                            <Image
-                                src={ticket.image}
-                                alt={ticket.ticketTitle}
-                                width={500}
-                                height={500}
-                                className="object-cover"
-                                unoptimized
-                            />
+                            <Image src={ticket.image} alt={ticket.ticketTitle} width={500} height={500}
+                                className="object-cover" unoptimized />
                         ) : (
                             <div className="flex items-center justify-center h-full text-gray-400">
                                 No Image

@@ -65,6 +65,7 @@ const BookingTickets = async () => {
                             <p className="text-sm text-gray-600">
                                 Departure: {new Date(booking.departureDate).toLocaleString()}
                             </p>
+
                             <div className="mt-2">
                                 <span className={`px-3 py-1 rounded-full text-xs font-medium ${booking.status === 'approved' ? 'bg-green-100 text-green-700' :
                                     booking.status === 'rejected' ? 'bg-red-100 text-red-700' :
@@ -74,16 +75,51 @@ const BookingTickets = async () => {
                                 </span>
                             </div>
                             {/* "Pay Now" button (if accepted) */}
-                            {booking.status === 'accepted' && (
-                                <form action="/api/checkout_sessions" method="POST">
-                                    <section>
-                                        <button className="mt-3 inline-block text-center bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition" type="submit" role="link">
+                            <div className="mt-3">
+                                <p className="text-sm mb-2">
+                                    Status:
+                                    <span className="font-semibold ml-2">
+                                        {booking.status}
+                                    </span>
+                                </p>
+
+                                {/* {booking.status === "accepted" ? (
+                                    <form action="/api/checkout_sessions" method="POST">
+                                        <button
+                                            type="submit"
+                                            className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg"
+                                        >
                                             Checkout
                                         </button>
-                                    </section>
-                                </form>
+                                    </form>
+                                ) : (
+                                    <button
+                                        disabled
+                                        className="w-full bg-gray-300 text-gray-600 py-2 rounded-lg cursor-not-allowed"
+                                    >
+                                        Waiting for Vendor Approval
+                                    </button>
+                                )} */}
 
-                            )}
+                                {booking.status === "accepted" ? (
+                                    <form action="/api/checkout_sessions" method="POST">
+                                        <input type="hidden" name="bookingId" value={booking._id} />
+                                        <button
+                                            type="submit"
+                                            className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg"
+                                        >
+                                            Checkout
+                                        </button>
+                                    </form>
+                                ) : (
+                                    <button
+                                        disabled
+                                        className="w-full bg-gray-300 text-gray-600 py-2 rounded-lg cursor-not-allowed"
+                                    >
+                                        Waiting for Vendor Approval
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     </div>
                 ))}
