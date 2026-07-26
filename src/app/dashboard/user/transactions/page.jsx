@@ -11,6 +11,7 @@ export default async function TransactionHistoryPage() {
     let transactions = [];
     try {
         transactions = await getUserTransactions(user.id);
+        console.log(transactions)
     } catch (error) {
         console.error('Error fetching transactions:', error);
     }

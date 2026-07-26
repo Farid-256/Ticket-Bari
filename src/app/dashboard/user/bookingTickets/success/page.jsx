@@ -1,7 +1,12 @@
 import Link from "next/link";
 import { FaCheckCircle } from "react-icons/fa";
+import { revalidatePath } from "next/cache";
 
-const SuccessPage = () => {
+const SuccessPage = async () => {
+    revalidatePath("/");
+    revalidatePath("/dashboard/user/bookingTickets");
+    revalidatePath("/dashboard/user/transactionHistory");
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
             <div className="bg-white shadow-xl rounded-2xl p-10 max-w-md w-full text-center">

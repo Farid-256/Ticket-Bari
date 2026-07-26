@@ -83,24 +83,6 @@ const BookingTickets = async () => {
                                     </span>
                                 </p>
 
-                                {/* {booking.status === "accepted" ? (
-                                    <form action="/api/checkout_sessions" method="POST">
-                                        <button
-                                            type="submit"
-                                            className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg"
-                                        >
-                                            Checkout
-                                        </button>
-                                    </form>
-                                ) : (
-                                    <button
-                                        disabled
-                                        className="w-full bg-gray-300 text-gray-600 py-2 rounded-lg cursor-not-allowed"
-                                    >
-                                        Waiting for Vendor Approval
-                                    </button>
-                                )} */}
-
                                 {booking.status === "accepted" ? (
                                     <form action="/api/checkout_sessions" method="POST">
                                         <input type="hidden" name="bookingId" value={booking._id} />

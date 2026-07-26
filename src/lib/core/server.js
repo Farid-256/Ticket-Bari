@@ -24,7 +24,6 @@ export const serverMutation = async (path, data, method = 'POST') => {
         method: method,
         headers: {
             'Content-Type': 'application/json',
-            //jwt3
             ... await authHeader()
         },
         body: JSON.stringify(data),

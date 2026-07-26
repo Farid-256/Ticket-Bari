@@ -34,11 +34,15 @@ const Register = () => {
         }
     };
 
-    const handleRegister = async() =>{
+    const handleRegister = async () => {
+        const roleSelect = document.querySelector('select[name="role"]');
+        const role = roleSelect?.value || 'user';
+
         await authClient.signIn.social({
-            provider: 'google'
-        })
-    }
+            provider: 'google',
+            additionalData: { role },
+        });
+    };
 
     return (
         <div className="min-h-[70vh] flex items-center justify-center px-4 py-8">

@@ -14,7 +14,6 @@ const AdvertiseTable = ({ initialTickets }) => {
     const handleToggle = async (ticketId, currentStatus) => {
         const newStatus = !currentStatus;
 
-        // যদি অ্যাডভার্টাইজ করতে চায় এবং ইতিমধ্যে ৬টি হয়ে থাকে
         if (newStatus) {
             const advertisedCount = tickets.filter(t => t.isAdvertised).length;
             if (advertisedCount >= 6) {

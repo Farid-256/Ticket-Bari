@@ -26,8 +26,12 @@ const Login = () => {
     };
 
      const handlelogin = async() =>{
-        await authClient.signIn.social({
-            provider: 'google'
+       const login =  await authClient.signIn.social({
+            provider: 'google',
+            additionalData: {
+                role : 'user'
+            }
+            
         })
     }
 
