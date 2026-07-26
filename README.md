@@ -3,18 +3,18 @@
 ## Project Purpose
 TicketBari is a full-stack online ticket booking platform where users can discover and book travel tickets (Bus, Train, Launch, Plane). It features three distinct roles: **User**, **Vendor**, and **Admin**, each with tailored dashboards and functionalities.
 
-## Live URL
+## Live URL: https://ticket-bari-nu.vercel.app
 
 
 ## Admin & Vendor Credentials
 
 ### Admin
-- **Email:** 
-- **Password:** 
+- **Email: admin@test.com
+- **Password: Abc12345
 
 ### Vendor
-- **Email:** 
-- **Password:** 
+- **Email: vendor@test.com
+- **Password: Abc12345
 
 ## Key Features
 
